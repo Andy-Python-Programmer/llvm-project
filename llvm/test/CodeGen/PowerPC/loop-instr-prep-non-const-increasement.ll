@@ -85,18 +85,17 @@ define zeroext i8 @foo1(i8* %p, i32 signext %n, i32 signext %count) {
 ; CHECK-NEXT:    cmpwi r4, 1
 ; CHECK-NEXT:    blt cr0, .LBB1_4
 ; CHECK-NEXT:  # %bb.1: # %for.body.preheader
+; CHECK-NEXT:    extsw r5, r5
+; CHECK-NEXT:    sub r3, r3, r5
 ; CHECK-NEXT:    addi r6, r3, 1000
 ; CHECK-NEXT:    clrldi r3, r4, 32
-; CHECK-NEXT:    extsw r5, r5
-; CHECK-NEXT:    li r4, 0
 ; CHECK-NEXT:    mtctr r3
 ; CHECK-NEXT:    li r3, 0
 ; CHECK-NEXT:    .p2align 4
 ; CHECK-NEXT:  .LBB1_2: # %for.body
 ; CHECK-NEXT:    #
-; CHECK-NEXT:    lbzx r7, r6, r4
-; CHECK-NEXT:    add r4, r4, r5
-; CHECK-NEXT:    add r3, r7, r3
+; CHECK-NEXT:    lbzux r4, r6, r5
+; CHECK-NEXT:    add r3, r4, r3
 ; CHECK-NEXT:    bdnz .LBB1_2
 ; CHECK-NEXT:  # %bb.3: # %for.cond.cleanup
 ; CHECK-NEXT:    clrldi r3, r3, 56
