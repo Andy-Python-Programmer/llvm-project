@@ -544,6 +544,8 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
       return new FreeBSDTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::Fuchsia:
       return new FuchsiaTargetInfo<X86_64TargetInfo>(Triple, Opts);
+    case llvm::Triple::Aero:
+      return new AeroTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::KFreeBSD:
       return new KFreeBSDTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::Solaris:
@@ -587,14 +589,14 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
         !Triple.isOSBinFormatWasm())
       return nullptr;
     switch (Triple.getOS()) {
-      case llvm::Triple::WASI:
-        return new WASITargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
-      case llvm::Triple::Emscripten:
-        return new EmscriptenTargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
-      case llvm::Triple::UnknownOS:
-        return new WebAssemblyOSTargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
-      default:
-        return nullptr;
+    case llvm::Triple::WASI:
+      return new WASITargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
+    case llvm::Triple::Emscripten:
+      return new EmscriptenTargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
+    case llvm::Triple::UnknownOS:
+      return new WebAssemblyOSTargetInfo<WebAssembly32TargetInfo>(Triple, Opts);
+    default:
+      return nullptr;
     }
   case llvm::Triple::wasm64:
     if (Triple.getSubArch() != llvm::Triple::NoSubArch ||
@@ -602,14 +604,14 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
         !Triple.isOSBinFormatWasm())
       return nullptr;
     switch (Triple.getOS()) {
-      case llvm::Triple::WASI:
-        return new WASITargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
-      case llvm::Triple::Emscripten:
-        return new EmscriptenTargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
-      case llvm::Triple::UnknownOS:
-        return new WebAssemblyOSTargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
-      default:
-        return nullptr;
+    case llvm::Triple::WASI:
+      return new WASITargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
+    case llvm::Triple::Emscripten:
+      return new EmscriptenTargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
+    case llvm::Triple::UnknownOS:
+      return new WebAssemblyOSTargetInfo<WebAssembly64TargetInfo>(Triple, Opts);
+    default:
+      return nullptr;
     }
 
   case llvm::Triple::renderscript32:

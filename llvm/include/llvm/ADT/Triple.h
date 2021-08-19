@@ -160,6 +160,7 @@ public:
   enum OSType {
     UnknownOS,
 
+    Aero,
     Ananas,
     CloudABI,
     Darwin,

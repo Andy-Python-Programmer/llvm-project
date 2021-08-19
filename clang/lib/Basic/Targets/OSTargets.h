@@ -203,6 +203,33 @@ public:
   }
 };
 
+// Aero Target
+template <typename Target>
+class LLVM_LIBRARY_VISIBILITY AeroTargetInfo : public OSTargetInfo<Target> {
+protected:
+  void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
+                    MacroBuilder &Builder) const override {
+    DefineStd(Builder, "unix", Opts);
+    Builder.defineMacro("__aero__");
+    Builder.defineMacro("__ELF__");
+    if (this->HasFloat128) 
+      Builder.defineMacro("__FLOAT128__");
+  }
+
+public:
+  AeroTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
+      : OSTargetInfo<Target>(Triple, Opts) {
+    switch (Triple.getArch()) {
+    default:
+      break;
+    case llvm::Triple::x86:
+    case llvm::Triple::x86_64:
+      this->HasFloat128 = true;
+      break;
+    }
+  }
+};
+
 #ifndef FREEBSD_CC_VERSION
 #define FREEBSD_CC_VERSION 0U
 #endif

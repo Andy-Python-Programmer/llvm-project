@@ -21,6 +21,7 @@
 #include "ToolChains/Darwin.h"
 #include "ToolChains/DragonFly.h"
 #include "ToolChains/FreeBSD.h"
+#include "ToolChains/Aero.h"
 #include "ToolChains/Fuchsia.h"
 #include "ToolChains/Gnu.h"
 #include "ToolChains/HIP.h"
@@ -4896,6 +4897,9 @@ const ToolChain &Driver::getToolChain(const ArgList &Args,
       break;
     case llvm::Triple::Ananas:
       TC = std::make_unique<toolchains::Ananas>(*this, Target, Args);
+      break;
+    case llvm::Triple::Aero:
+      TC = std::make_unique<toolchains::Aero>(*this, Target, Args);
       break;
     case llvm::Triple::CloudABI:
       TC = std::make_unique<toolchains::CloudABI>(*this, Target, Args);
